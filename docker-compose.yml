@@ -1,0 +1,23 @@
+services:
+  corekeeper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: CoreKeeper-DS
+    restart: unless-stopped
+    ports:
+      - "27015:27015/udp"
+      - "27016:27016/udp"
+      - "27015:27015/tcp"
+    env_file:
+      - .env
+    environment:
+      - AUTO_UPDATE=false
+      - GAME_ID=${GAME_ID}
+      - WORLD_NAME=${WORLD_NAME}
+      - WORLD_PASSWORD=${WORLD_PASSWORD}
+      - WORLD_INDEX=0
+      - MAX_PLAYERS=10
+    volumes:
+      - /docker/core_keeper/data/server-files:/home/steam/corekeeper-dedicated
+      - /docker/core_keeper/data/save-data:/home/steam/.config/unity3d/Pugstorm/Core Keeper/DedicatedServer
